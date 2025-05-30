@@ -7,5 +7,9 @@ module.exports = {
   },
   retries: 1,
   testDir: 'tests',
-  timeout: 30000,
+  timeout: 10000,  // bütün test üçün maksimum vaxt (ms)
+  expect: {
+    timeout: 30000 // bütün expect-lər üçün timeout (ms)
+  },
+  
 }
