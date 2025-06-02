@@ -1,34 +1,39 @@
 class LoginPage {
   constructor(page) {
     this.page = page;
-    this.usernameInput = page.locator('#username');     
-    this.passwordInput = page.locator('#password');     
-    this.loginButton = page.locator('#login');         
-    this.errorMessage = page.locator('#errorMessage');  
-    this.welcomeMessage = page.locator('#welcomeMessage'); 
-    this.emailError = '#email-error';      
+    this.emailInput = page.locator('#email');
+    this.passwordInput = page.locator('#password');
+    this.loginButton = page.locator('button:has-text("Log in")');
+    this.passwordToggle = page.locator('[aria-label="Toggle password visibility"]');
+    this.errorAlert = page.locator('.chakra-alert__title.css-1jeznpc');
+    this.emailError = page.locator('#field\\:\\:\\«r1»\\:\\:error-text');
+    this.passwordError = page.locator('#field\\:\\:\\«r2»\\:\\:error-text');
   }
 
   async goto() {
-    await this.page.goto('http://localhost:8000');  
+    await this.page.goto('http://localhost:8000/login');
   }
 
   async login(email, password) {
-    await this.page.fill(this.emailInput, email);
-    await this.page.fill(this.passwordInput, password);
-    await this.page.click(this.submitButton);
+    await this.emailInput.fill(email);
+    await this.passwordInput.fill(password);
+    await this.loginButton.click();
   }
 
-  async getErrorMessage() {
-    return await this.page.textContent(this.errorMessage);
+  async togglePasswordVisibility() {
+    await this.passwordToggle.click();
+  }
+
+  async getErrorText() {
+    return await this.errorAlert.textContent();
   }
 
   async getEmailError() {
-    return await this.page.textContent(this.emailError);
+    return await this.emailError.textContent();
   }
 
   async getPasswordError() {
-    return await this.page.textContent(this.passwordError);
+    return await this.passwordError.textContent();
   }
 }
 
