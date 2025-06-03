@@ -1,53 +1,68 @@
-class Registerpage {
+class RegisterPage {
   constructor(page) {
     this.page = page;
-    this.firstName = '#firstName';
-    this.lastName = '#lastName';
-    this.email = '#email';
-    this.password = '#password';
-    this.confirmPassword = '#confirmPassword';
-    this.registerButton = '';
-    this.errorMessage = '.error-message';
-    this.successMessage = '.success-message';
-
+    this.firstName = page.locator('#firstName');
+    this.lastName = page.locator('#lastName');
+    this.email = page.locator('#email');
+    this.password = page.locator('#password');
+    this.confirmPassword = page.locator('#confirmPassword');
+    this.registerButton = page.locator('button:has-text("Get Started")');
+    this.firstNameError = page.locator('#field\\:\\:\\«r1»\\:\\:error-text');
+    this.lastNameError = page.locator('#field\\:\\:\\«r2»\\:\\:error-text');
+    this.emailError = page.locator('#field\\:\\:\\«r3»\\:\\:error-text');
+    this.errorAlert = page.locator('.chakra-alert__title.css-1jeznpc')
+    this.successMessage = page.locator('.success-message');
   }
+
   async goto() {
     await this.page.goto('http://localhost:8000/register');
   }
 
-  async enterFistName(firstName) {
-    await this.page.fill(this.firstNameInput, firstName);
+  async enterFirstName(firstName) {
+    await this.firstName.fill(firstName);
   }
 
   async enterLastName(lastName) {
-    await this.page.fill(this.lastNameInput, lastName);
+    await this.lastName.fill(lastName);
   }
 
   async enterEmail(email) {
-    await this.page.fill(this.emailInput, email);
+    await this.email.fill(email);
   }
 
   async enterPassword(password) {
-    await this.page.fill(this.passwordInput, password);
-
+    await this.password.fill(password);
   }
+
   async enterConfirmPassword(confirmPassword) {
-    await this.page.fill(this.confirmPasswordInput, confirmPassword)
+    await this.confirmPassword.fill(confirmPassword);
   }
 
   async clickRegister() {
-    await this.page.click(this.registerButton);
+    await this.registerButton.click();
   }
 
-  async getErrorMessage() {
-    return this.page.textContent(this.errorMessage);
+  async getFirstNameError() {
+  if (await this.firstNameError.isVisible()) {
+    return await this.firstNameError.textContent();
   }
+  return '';
+}
 
+  async getLastNameError(){
+    return await this.lastNameError.textContent();
+  }
+  async getEmailError(){
+    return await this.emailError.textContent();
+  }
 
   async getSuccessMessage() {
-    return this.page.textContent(this.successMessage);
+    return await this.successMessage.textContent();
   }
-  async register(email, password, confirmPassword) {
+
+  async register(firstName, lastName, email, password, confirmPassword) {
+    await this.enterFirstName(firstName);
+    await this.enterLastName(lastName);
     await this.enterEmail(email);
     await this.enterPassword(password);
     await this.enterConfirmPassword(confirmPassword);

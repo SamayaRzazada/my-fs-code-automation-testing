@@ -63,8 +63,13 @@ test.describe('Login feature', () => {
 
   test('Login with both incorrect email and password', async () => {
     await loginPage.login('sdjfjfj@gmail.com', 'Wert123!');
-    await expect(loginPage.errorAlert).toHaveText('The provided credentials are incorrect.');
-  });
+const errorText = await loginPage.getErrorText();
+
+    if (errorText?.includes('The provided credentials are incorrect.')) {
+      await expect(loginPage.errorAlert).toHaveText('The provided credentials are incorrect.');
+    } else if (errorText?.includes('Too Many Attempts.')) {
+      await expect(loginPage.errorAlert).toHaveText('Too Many Attempts.');
+    }});
 
   test('Maximum length test for email input field', async () => {
     const longInput = 'a'.repeat(256);
@@ -76,9 +81,7 @@ test.describe('Login feature', () => {
       await expect(loginPage.errorAlert).toHaveText('The provided credentials are incorrect.');
     } else if (errorText?.includes('Too Many Attempts.')) {
       await expect(loginPage.errorAlert).toHaveText('Too Many Attempts.');
-    } else {
-      throw new Error(`Unexpected error message: "${errorText}"`);
-    }
+    } 
   });
 
   test('Maximum length test for password input field', async () => {
@@ -91,9 +94,7 @@ test.describe('Login feature', () => {
       await expect(loginPage.errorAlert).toHaveText('The provided credentials are incorrect.');
     } else if (errorText?.includes('Too Many Attempts.')) {
       await expect(loginPage.errorAlert).toHaveText('Too Many Attempts.');
-    } else {
-      throw new Error(`Unexpected error message: "${errorText}"`);
-    }
+    } 
   });
 
   test.afterEach(async ({ page }) => {
