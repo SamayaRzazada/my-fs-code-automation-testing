@@ -10,8 +10,10 @@ class RegisterPage {
     this.firstNameError = page.locator('#field\\:\\:\\«r1»\\:\\:error-text');
     this.lastNameError = page.locator('#field\\:\\:\\«r2»\\:\\:error-text');
     this.emailError = page.locator('#field\\:\\:\\«r3»\\:\\:error-text');
-    this.errorAlert = page.locator('.chakra-alert__title.css-1jeznpc')
-    this.successMessage = page.locator('.success-message');
+    this.errorAlert = page.locator('.chakra-alert__title.css-1jeznpc');
+    this.passwordError = page.locator('#field\\:\\:\\«r4»\\:\\:error-text');
+    this.confirmError  = page.locator('#field\\:\\:\\«r5»\\:\\:error-text');
+    this.registerButton = page.locator('button:has-text("Get Started")');
   }
 
   async goto() {
@@ -52,12 +54,9 @@ class RegisterPage {
   async getLastNameError(){
     return await this.lastNameError.textContent();
   }
+
   async getEmailError(){
     return await this.emailError.textContent();
-  }
-
-  async getSuccessMessage() {
-    return await this.successMessage.textContent();
   }
 
   async register(firstName, lastName, email, password, confirmPassword) {
