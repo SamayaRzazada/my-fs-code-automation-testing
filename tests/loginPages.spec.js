@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../pages/loginPages.js');
+const { loginData, expectedMessages } = require('../data/testData');
 
 test.describe('Login feature', () => {
 
@@ -11,33 +12,34 @@ test.describe('Login feature', () => {
   });
 
   test('Login successfully with valid credentials', async ({ page }) => {
-    await loginPage.login('smarzazad@gmail.com', 'Tester2025');
-    await expect(page).toHaveURL('http://localhost:8000/licenses');
+    await loginPage.login(loginData.validUser.email, loginData.validUser.password);
+    await expect(page).toHaveURL(expectedMessages.loginSuccessRedirect);
   });
 
   test('Login with visible password input (eye icon)', async ({ page }) => {
-    await loginPage.login('smarzazad@gmail.com', 'Tester2025');
+    await loginPage.login(loginData.validUser.email, loginData.validUser.password);
     await loginPage.togglePasswordVisibility();
-    await expect(page).toHaveURL('http://localhost:8000/licenses');
+    await expect(page).toHaveURL(expectedMessages.loginSuccessRedirect);
   });
 
   test('Login with an unregistered email', async ({ page }) => {
-    await loginPage.login('sdjfjfj@gmail.com', 'Tester2025');
+    await loginPage.login(loginData.invalidUser.email, loginData.validUser.password);
 
     const errorText = await loginPage.getErrorText();
 
-    if (errorText?.includes('The provided credentials are incorrect.')) {
-      await expect(loginPage.errorAlert).toHaveText('The provided credentials are incorrect.');
-    } else if (errorText?.includes('Too Many Attempts.')) {
-      await expect(loginPage.errorAlert).toHaveText('Too Many Attempts.');
+      if (errorText?.includes(expectedMessages.invalidCredentials)) {
+      await expect(loginPage.errorAlert).toHaveText(expectedMessages.invalidCredentials);
+    } else if (errorText?.includes(expectedMessages.tooManyAttempts)) {
+      await expect(loginPage.errorAlert).toHaveText(expectedMessages.tooManyAttempts);
     } else {
       throw new Error(`Unexpected error message: "${errorText}"`);
     }
   });
 
+
   test('Login - Invalid email format', async () => {
-    await loginPage.login('sdjfjfjgmail.com', 'Tester2025');
-    await expect(loginPage.emailError).toHaveText('The Invalid email format');
+    await loginPage.login(loginData.invalidUser.email, loginData.validUser.page);
+    await expect(loginPage.emailError).toHaveText(expectedMessages.invalidEmailFormat);
   });
 
   test('Sign in with empty email', async () => {

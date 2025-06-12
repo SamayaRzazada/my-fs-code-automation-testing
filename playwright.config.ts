@@ -1,5 +1,13 @@
-module.exports = {
+
+
+import { defineConfig } from '@playwright/test';
+import dotenv from 'dotenv';
+
+dotenv.config(); 
+
+export default defineConfig({
   use: {
+    baseURL: process.env.BASE_URL,
     headless: true,
     viewport: { width: 1280, height: 720 },
     screenshot: 'only-on-failure',
@@ -7,9 +15,8 @@ module.exports = {
   },
   retries: 1,
   testDir: 'tests',
-  timeout: 10000,  // bütün test üçün maksimum vaxt (ms)
+  timeout: 10000,
   expect: {
-    timeout: 30000 // bütün expect-lər üçün timeout (ms)
+    timeout: 30000,
   },
-  
-}
+});
