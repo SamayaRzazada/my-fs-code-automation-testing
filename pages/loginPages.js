@@ -12,7 +12,7 @@ class LoginPage {
   }
 
   async goto() {
-    await this.page.goto('http://localhost:8000/login');
+    await this.page.goto('/login');
   }
 
   async login(email, password)  {
@@ -22,7 +22,9 @@ class LoginPage {
   }
 
   async togglePasswordVisibility() {
+   if( await this.passwordToggle.isVisible()){
     await this.passwordToggle.click();
+   }
   }
 
   async getErrorText() {

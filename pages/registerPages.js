@@ -17,7 +17,7 @@ class RegisterPage {
   }
 
   async goto() {
-    await this.page.goto('http://localhost:8000/register');
+    await this.page.goto('/register');
   }
 
   async enterFirstName(firstName) {

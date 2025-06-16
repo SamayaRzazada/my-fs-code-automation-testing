@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../pages/loginPages.js');
-const { loginData, expectedMessages } = require('../data/testData');
+const { loginData, expectedMessages } = require('../testData/loginData.js');
 
 test.describe('Login feature', () => {
 
@@ -43,61 +43,60 @@ test.describe('Login feature', () => {
   });
 
   test('Sign in with empty email', async () => {
-    await loginPage.login('', 'Tester2025');
-    await expect(loginPage.emailError).toHaveText('Email is required');
+    await loginPage.login(loginData.emptyFields.email, loginData.validUser.password);
+    await expect(loginPage.emailError).toHaveText(expectedMessages.emptyEmail);
   });
 
   test('Sign in with empty password', async () => {
-    await loginPage.login('smarzazad@gmail.com', '');
-    await expect(loginPage.passwordError).toHaveText('Password is required');
+    await loginPage.login(loginData.validUser.email, loginData.emptyFields.password);
+    await expect(loginPage.passwordError).toHaveText(expectedMessages.emptyPassword);
   });
 
   test('Sign in with empty credentials', async () => {
-    await loginPage.login('', '');
-    await expect(loginPage.emailError).toHaveText('Email is required');
-    await expect(loginPage.passwordError).toHaveText('Password is required');
+    await loginPage.login(oginData.emptyFields.email, loginData.emptyFields.password);
+    await expect(loginPage.emailError).toHaveText(expectedMessages.emptyEmail);
+    await expect(loginPage.passwordError).toHaveText(expectedMessages.emptyPassword);
   });
 
   test('Login with incorrect password', async () => {
-    await loginPage.login('smarzazad@gmail.com', 'Wert123!');
-    await expect(loginPage.errorAlert).toHaveText('The provided credentials are incorrect.');
+    await loginPage.login(loginData.validUser.email, loginData.invalidUser.password);
+    await expect(loginPage.errorAlert).toHaveText(expectedMessages.invalidCredentials);
   });
 
   test('Login with both incorrect email and password', async () => {
-    await loginPage.login('sdjfjfj@gmail.com', 'Wert123!');
+    await loginPage.login(loginData.invalidUser.email, loginData.invalidUser.password);
 const errorText = await loginPage.getErrorText();
 
-    if (errorText?.includes('The provided credentials are incorrect.')) {
-      await expect(loginPage.errorAlert).toHaveText('The provided credentials are incorrect.');
-    } else if (errorText?.includes('Too Many Attempts.')) {
-      await expect(loginPage.errorAlert).toHaveText('Too Many Attempts.');
+    if (errorText?.includes(expectedMessages.invalidCredentials)) {
+      await expect(loginPage.errorAlert).toHaveText(expectedMessages.invalidCredentials);
+    } else if (errorText?.includes(expectedMessages.tooManyAttempts)) {
+      await expect(loginPage.errorAlert).toHaveText(expectedMessages.tooManyAttempts);
     }});
-
   test('Maximum length test for email input field', async () => {
-    const longInput = 'a'.repeat(256);
-    await loginPage.login(`${longInput}@gmail.com`, 'Wert123!');
+    await loginPage.login(`${loginData.longInput}@gmail.com`, loginData.invalidUser.password);
 
     const errorText = await loginPage.getErrorText();
 
-    if (errorText?.includes('The provided credentials are incorrect.')) {
-      await expect(loginPage.errorAlert).toHaveText('The provided credentials are incorrect.');
-    } else if (errorText?.includes('Too Many Attempts.')) {
-      await expect(loginPage.errorAlert).toHaveText('Too Many Attempts.');
-    } 
+    if (errorText?.includes(expectedMessages.invalidCredentials)) {
+      await expect(loginPage.errorAlert).toHaveText(expectedMessages.invalidCredentials);
+    } else if (errorText?.includes(expectedMessages.tooManyAttempts)) {
+      await expect(loginPage.errorAlert).toHaveText(expectedMessages.tooManyAttempts);
+    }
   });
+
 
   test('Maximum length test for password input field', async () => {
-    const longInput = 'a'.repeat(256);
-    await loginPage.login('smarzazad@gmail.com', longInput);
+    await loginPage.login(loginData.validUser.email, loginData.longInput);
 
     const errorText = await loginPage.getErrorText();
 
-    if (errorText?.includes('The provided credentials are incorrect.')) {
-      await expect(loginPage.errorAlert).toHaveText('The provided credentials are incorrect.');
-    } else if (errorText?.includes('Too Many Attempts.')) {
-      await expect(loginPage.errorAlert).toHaveText('Too Many Attempts.');
-    } 
+    if (errorText?.includes(expectedMessages.invalidCredentials)) {
+      await expect(loginPage.errorAlert).toHaveText(expectedMessages.invalidCredentials);
+    } else if (errorText?.includes(expectedMessages.tooManyAttempts)) {
+      await expect(loginPage.errorAlert).toHaveText(expectedMessages.tooManyAttempts);
+    }
   });
+
 
   test.afterEach(async ({ page }) => {
     await page.close();
