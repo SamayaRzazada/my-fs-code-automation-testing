@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { Licences } = require('../pages/licenses.js');
+const { Licences } = require('../pages/licensesPages.js');
 
 test.describe('Licenses feature', () => {
   let licenses;

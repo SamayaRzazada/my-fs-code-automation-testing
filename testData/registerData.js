@@ -1,7 +1,7 @@
 const { faker } = require("@faker-js/faker");
 
 const registerData = {
- ValidUser: {
+ ValidUser:{
     firstName:'Tester',
     lastName:'qatest',
     email:faker.internet.email(),
@@ -52,8 +52,6 @@ invalidFormat: {
   }
 };
 
-
-
 const expectedMessages ={
  loginSuccessRedirect: 'http://localhost:8000/verify-email',
   tooManyAttempts: 'Too Many Attempts.',
@@ -72,3 +70,6 @@ const expectedMessages ={
   confirmPasswordRequired: 'Confirm Password is required'
 }
 
+module.exports = {
+  registerData, expectedMessages
+};

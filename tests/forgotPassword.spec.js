@@ -1,5 +1,7 @@
 const { test, expect } = require('@playwright/test');
-const { ForgotPassword } = require('../pages/forgotPassword.js');
+const ForgotPassword = require('../pages/forgotPassword.js');
+
+const { forgotPasswordData, expectedForgotPasswordMessages } = require('../testData/forgotPasswordData');
 
 test.describe('Forgot password feature', () => {
   let forgotPassword;
@@ -8,54 +10,30 @@ test.describe('Forgot password feature', () => {
     forgotPassword = new ForgotPassword(page);
     await forgotPassword.goto();
   });
-  //bug
+
   test('Unregistered Email Entry', async () => {
-    await forgotPassword.submitEmail('testerqwert@gmail.com');
-    await expect(forgotPassword.errorMessage).toHaveText('Email not found');
+    await forgotPassword.submitEmail(forgotPasswordData.unregisteredEmail);
+    await expect(forgotPassword.errorMessage).toHaveText(expectedForgotPasswordMessages.emailNotFound);
   });
 
-  //Bug 
-  test(' Invalid Email Format Entry', async () => {
-    await forgotPassword.submitEmail('tesrt2@');
-    await expect(forgotPassword.errorMessage).toHaveText('Enter a valid email address')
+  test('Invalid Email Format Entry', async () => {
+    await forgotPassword.submitEmail(forgotPasswordData.invalidEmailFormat);
+    await expect(forgotPassword.errorMessage).toHaveText(expectedForgotPasswordMessages.invalidEmailFormat);
   });
 
-  test(' Empty Email Field Submission', async () => {
-    await forgotPassword.submitEmail('');
-    await expect(forgotPassword.errorMessage).toHaveText('Email is required');
+  test('Empty Email Field Submission', async () => {
+    await forgotPassword.submitEmail(forgotPasswordData.emptyEmail);
+    await expect(forgotPassword.errorMessage).toHaveText(expectedForgotPasswordMessages.emptyEmail);
   });
 
   test('Valid Email Entry', async ({ page }) => {
-    await forgotPassword.submitEmail('smarzazd@gmail.com');
-    await expect(page).toHaveURL('https://my.fs-code.com/forgot-password');
+    await forgotPassword.submitEmail(forgotPasswordData.validEmail);
+    await expect(page).toHaveURL(expectedForgotPasswordMessages.validRedirectUrl);
   });
 
   test('Back to Login Link Functionality (Forgot password page)', async ({ page }) => {
     await forgotPassword.loginButton.click();
-    await expect(page).toHaveURL('https://my.fs-code.com/login');
+    await expect(page).toHaveURL(expectedForgotPasswordMessages.loginRedirectUrl);
   });
-
-  /* test('Mismatched Passwords', async ({ page }) => {
-      await page.goto('http://localhost:8000/reset-password?token=validTokenHere');
-      await resetPassword.fillResetForm('StrongPass123', 'WrongPass123');
-      await expect(resetPassword.alertMessage).toHaveText('Passwords do not match');
-    });
-  
-    test('Weak Password Validation', async ({ page }) => {
-      await page.goto('http://localhost:8000/reset-password?token=validTokenHere');
-      await resetPassword.fillResetForm('123', '123');
-      await expect(resetPassword.alertMessage).toHaveText('Password must contain at least 8 characters');
-    });
-  
-    test('Successful Password Reset', async ({ page }) => {
-      await page.goto('http://localhost:8000/reset-password?token=validTokenHere');
-      await resetPassword.fillResetForm('StrongPass123', 'StrongPass123');
-      await expect(resetPassword.alertMessage).toHaveText('Password has been successfully reset');
-      await expect(page).toHaveURL(/login/); // yönləndirmə yoxlaması
-    });
-  */
-
-
-
 
 });
