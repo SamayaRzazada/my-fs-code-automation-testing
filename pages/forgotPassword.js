@@ -1,10 +1,10 @@
 class ForgotPassword {
   constructor(page) {
     this.page = page;
-    this.emailInput = page.locator('#email'); 
-    this.submitButton = page.locator('.chakra-button.css-1dq2jlv');
-    this.errorMessage = page.locator('.error-message'); 
-    this.loginButton = page.locator('a:has-text("Back to Login")');
+    this.emailInput = page.locator('[data-test="forgot-password-email-input"]'); 
+    this.submitButton = page.locator('[data-test="forgot-password-submit-button"]');
+    this.errorMessage = page.locator('[data-test="forgot-password-email-input-error"]'); 
+    this.loginButton = page.locator('[data-test="forgot-password-back-to-login-link"]');
   }
 
   async goto() {

@@ -3,11 +3,11 @@ class LoginPage {
     this.page = page;
     this.emailInput = page.locator('#email');
     this.passwordInput = page.locator('#password');
-    this.loginButton = page.locator('button:has-text("Log in")');
-    this.passwordToggle = page.locator('[aria-label="Toggle password visibility"]');
+    this.loginButton = page.locator('[data-test="login-submit-button"]');
+    this.passwordToggle = page.locator('[data-test="login-password-input-password-toggle"]');
     this.errorAlert = page.locator('.chakra-alert__title.css-1jeznpc');
-    this.emailError = page.locator('#field\\:\\:\\«r1»\\:\\:error-text');
-    this.passwordError = page.locator('#field\\:\\:\\«r2»\\:\\:error-text');
+    this.emailError = page.locator('[data-test="login-email-input-error"]');
+    this.passwordError = page.locator('[data-test="login-password-input-error"]');
     this.productToggle = page.locator('.chakra-stack.css-19t25ob');
   }
 

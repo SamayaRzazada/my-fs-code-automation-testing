@@ -11,11 +11,12 @@ test.describe('Forgot password feature', () => {
     await forgotPassword.goto();
   });
 
+  //bug
   test('Unregistered Email Entry', async () => {
     await forgotPassword.submitEmail(forgotPasswordData.unregisteredEmail);
     await expect(forgotPassword.errorMessage).toHaveText(expectedForgotPasswordMessages.emailNotFound);
   });
-
+//bug 
   test('Invalid Email Format Entry', async () => {
     await forgotPassword.submitEmail(forgotPasswordData.invalidEmailFormat);
     await expect(forgotPassword.errorMessage).toHaveText(expectedForgotPasswordMessages.invalidEmailFormat);

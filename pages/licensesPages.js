@@ -3,18 +3,28 @@ class Licences {
     this.page = page;
     this.emailInput = page.locator('#email');
     this.passwordInput = page.locator('#password');
-    this.loginButton = page.locator('button:has-text("Log in")');
-    this.errorAlert = page.locator('.chakra-alert__title.css-1jeznpc');
-    this.emailError = page.locator('#field\\:\\:\\«r1»\\:\\:error-text');
-    this.licenseCode1 = page.locator('p.chakra-tooltip__trigger').nth(0);
-    this.licenseCode2 = page.locator('p.chakra-tooltip__trigger').nth(1);
+    this.loginButton = page.locator('[data-test="login-submit-button"]');
+    this.errorAlert = page.locator('.chakra-alert__title.css-1jeznpc');//The provided credentials are incorrect.
+    this.emailError = page.locator('[data-test="login-email-input-error"]');
     this.licenseKey = page.locator('p.chakra-tooltip__trigger');
-    this.searchInput = page.locator('#«rl»');
-
+    this.searchInput = page.locator('[data-test="license-filter-search"]');
+    this.license = page.locator('[data-test="licenses"]');
+    this.setting = page.locator('[data-test="settings"]');
+    this.collapse = page.locator('[data-test="side-navigation-toggle"]');
+    this.tableOne = page.locator('[data-test="license-table-view-1"]');
+    this.tableTwo = page.locator('[data-test="license-table-view-2"]');
+    this.filterButton = page.locator('data-test="license-filter-button"');
+    this.filterProductSelect = page.locator(['data-test="license-filter-product-select"']);
+    this.linked = page.locator('[data-test="license-filter-linked"]');
+    this.unlinked = page.locator('[data-test="license-filter-unlinked"]');
+    this.licenseFilterClear = page.locator('[data-test="license-filter-clear"]');
+    this.licenseFilterApply= page.locator('[data-test="license-filter-apply""]');
+    
+    
   }
 
   async goto() {
-    await this.page.goto('http://localhost:8000/login');
+    await this.page.goto('/login');
   }
 
   async login(email, password) {

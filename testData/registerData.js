@@ -57,7 +57,7 @@ const expectedMessages ={
   tooManyAttempts: 'Too Many Attempts.',
   emptyEmail: 'Email is required',
   emptyPassword: 'Password is required',
-  invalidEmailFormat: 'The Invalid email format',
+  invalidEmailFormat: 'Invalid email format',
   firstNameRequired: 'First name is required',
   firstNameTooShort: 'First name must be at least 3 characters long',
   lastNameRequired: 'Last name is required',

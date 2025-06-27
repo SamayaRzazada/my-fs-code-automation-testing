@@ -44,9 +44,10 @@ test.describe('Login feature', () => {
 
 
   test('Login - Invalid email format', async () => {
+      
     await loginPage.login(
-      loginData.invalidUser.email, 
-      loginData.validUser.page);
+      loginData.invalidFormat.email,
+      loginData.validUser.password);
     await expect(loginPage.emailError).toHaveText(expectedMessages.invalidEmailFormat);
   });
 

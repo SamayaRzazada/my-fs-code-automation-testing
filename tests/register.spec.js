@@ -118,7 +118,8 @@ test.describe('Register feature', () => {
       registerData.ValidUser.password,
       registerData.emptyFields.confirmPassword
     );
-    await expect(registerPage.confirmError).toHaveText(expectedMessages.confirmPasswordRequired);
+    await expect(registerPage.confirmPasswordError).toHaveText(expectedMessages.confirmPasswordRequired);
+
   });
 
   test(' Password too short', async () => {
@@ -162,7 +163,7 @@ test.describe('Register feature', () => {
       registerData.ValidUser.password,
       registerData.passwordsMismatch.confirmPassword
     );
-    await expect(registerPage.confirmError).toHaveText(expectedMessages.passwordsMismatch);
+    await expect(registerPage.confirmPasswordError).toHaveText(expectedMessages.passwordsMismatch);
   });
 
   test(' All fields empty', async () => {
@@ -178,6 +179,6 @@ test.describe('Register feature', () => {
     await expect(registerPage.lastNameError).toHaveText(expectedMessages.lastNameRequired);
     await expect(registerPage.emailError).toHaveText(expectedMessages.emptyEmail);
     await expect(registerPage.passwordError).toHaveText(expectedMessages.emptyPassword);
-    await expect(registerPage.confirmError).toHaveText(expectedMessages.confirmPasswordRequired);
+    await expect(registerPage.confirmPasswordError).toHaveText(expectedMessages.confirmPasswordRequired);
   });
 });

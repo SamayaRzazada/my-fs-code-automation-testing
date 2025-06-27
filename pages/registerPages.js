@@ -6,12 +6,12 @@ class RegisterPage {
     this.email = page.locator('#email');
     this.password = page.locator('#password');
     this.confirmPassword = page.locator('#confirmPassword');
-    this.registerButton = page.locator('button:has-text("Get Started")');
-    this.firstNameError = page.locator('#field\\:\\:\\«r1»\\:\\:error-text');
-    this.lastNameError = page.locator('#field\\:\\:\\«r2»\\:\\:error-text');
-    this.emailError = page.locator('#field\\:\\:\\«r3»\\:\\:error-text');
-    this.passwordError = page.locator('#field\\:\\:\\«r4»\\:\\:error-text');
-    this.confirmPasswordError = page.locator('#field\\:\\:\\«r5»\\:\\:error-text');
+    this.registerButton = page.locator('[data-test="register-submit-button"]');
+    this.firstNameError = page.locator('[data-test="register-first-name-input-error"]');
+    this.lastNameError = page.locator('[data-test="register-last-name-input-error"]');
+    this.emailError = page.locator('[data-test="register-email-input-error"]');
+    this.passwordError = page.locator('[data-test="register-password-input-error"]');
+    this.confirmPasswordError = page.locator('[data-test="register-confirm-password-input-error"]');
     this.alertError = page.locator('.chakra-alert__title.css-1jeznpc');
   }
 
