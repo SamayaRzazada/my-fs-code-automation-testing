@@ -1,4 +1,4 @@
-class Licences {
+class Licenses {
   constructor(page) {
     this.page = page;
     this.emailInput = page.locator('#email');

@@ -1,11 +1,11 @@
 const { test, expect } = require('@playwright/test');
-const { Licences } = require('../pages/licensesPages.js');
+const { Licenses } = require('../pages/licensesPages.js');
 
 test.describe('Licenses feature', () => {
   let licenses;
 
   test.beforeEach(async ({ page }) => {
-    licenses = new Licences(page);
+    licenses = new Licenses(page);
     await licenses.goto();
   });
 

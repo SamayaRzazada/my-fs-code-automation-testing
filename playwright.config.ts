@@ -1,5 +1,3 @@
-
-
 import { defineConfig } from '@playwright/test';
 import dotenv from 'dotenv';
 
@@ -13,10 +11,12 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
-  retries: 1,
+  retries: 1,                
+  workers: 4,                
   testDir: 'tests',
   timeout: 10000,
   expect: {
     timeout: 30000,
   },
+  reporter: [['html'], ['allure-playwright']],  
 });
